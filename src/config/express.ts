@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 
 const createServer = (): express.Application => {
   const app = express();
@@ -6,10 +6,10 @@ const createServer = (): express.Application => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
-  app.disable('x-powered-by');
+  app.disable("x-powered-by");
 
-  app.get('/health', (_req, res) => {
-    res.send('UP');
+  app.get("/health", (_req, res) => {
+    res.send("UP");
   });
 
   return app;
