@@ -1,32 +1,24 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
-    "target": "es6",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "importHelpers": true,
-    "jsx": "react",
-    "alwaysStrict": true,
+    "target": "es2017",
     "sourceMap": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
     "strictNullChecks": false,
-    "outDir": "./build",
-    "baseUrl": ".",
-    "paths": {
-      "@server/*": ["src/*"],
-      "@tests/*": ["__tests__/*"],
-      "@config/*": ["src/config/*"],
-      "@domains/*": ["src/domains/*"]
-    }
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*", "__tests__/**/*"],
-  "exclude": ["node_modules", "build"]
+  "moduleNameMapper": {
+    "^@domains/(.*)": "<rootDir>/domains/$1"
+  }
 }

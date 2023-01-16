@@ -1,22 +1,24 @@
-import { Logger } from "winston";
-import { AuthUsersRepository } from "../domain/AuthUsersRepository";
-import { AuthUserResponse } from "../../Shared/application/responses/AuthUserResponse";
-import { AuthUserNotFoundError } from "../domain/AuthUserNotFoundError";
+import { AuthUsersRepository } from '../domain/AuthUsersRepository';
+import { AuthUserResponse } from '../../Shared/application/responses/AuthUserResponse';
+import { AuthUserNotFoundError } from '../domain/AuthUserNotFoundError';
+import { InvalidCredentialsError } from '../domain/InvalidCredentialsError';
+import { Injectable } from '@nestjs/common/decorators';
 
+@Injectable()
 export class AuthUserLogin {
-  constructor(
-    private readonly authUsersRepository: AuthUsersRepository,
-    private readonly logger: Logger
-  ) {
-    // logger.init(__dirname, AuthUserFinder);
-  }
+  constructor(private readonly authUsersRepository: AuthUsersRepository) {}
 
-  async invoke(username: string): Promise<AuthUserResponse> {
+  async invoke(username: string, password: string): Promise<AuthUserResponse> {
     const authUser = await this.authUsersRepository.findByUsername(username);
 
     if (!authUser) {
-      this.logger.error(`Username <${username}> not found`);
+      console.error(`Username <${username}> not found`);
       throw new AuthUserNotFoundError(username);
+    }
+
+    if (authUser.password !== password) {
+      console.error(`Username <${username}> invalid credentials`);
+      throw new InvalidCredentialsError(username);
     }
 
     return { username: authUser.username };
